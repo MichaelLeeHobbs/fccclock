@@ -10,24 +10,24 @@
             <p>Break Length</p>
 
             <div class="buttons">
-                <button ng-click="modBreakTime(-1)">-</button>
-                <p>{{breakLength}}</p>
-                <button ng-click="modBreakTime(1)">+</button>
+                <button ng-click="modTime('break', -1)">-</button>
+                <p>{{break}}</p>
+                <button ng-click="modTime('break', 1)">+</button>
             </div>
         </div>
         <div class="sessionControl">
             <p>Session Length</p>
 
             <div class="buttons">
-                <button ng-click="modSessionTime(-1)">-</button>
-                <p>{{sessionLength}}</p>
-                <button ng-click="modSessionTime(1)">+</button>
+                <button ng-click="modTime('session', -1)">-</button>
+                <p>{{session}}</p>
+                <button ng-click="modTime('session', 1)">+</button>
             </div>
         </div>
     </div>
 
     <div ng-click="toggleClock()" class="sessionDisplayOuter">
-        <div class="sessionDisplayInner" ng-click="toggleSessionState()">
+        <div class="sessionDisplayInner">
             <h2>{{sessionName}}</h2>
 
             <p>{{sessionTime}}</p>

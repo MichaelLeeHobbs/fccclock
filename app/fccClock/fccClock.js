@@ -11,13 +11,29 @@ angular.module('myApp.fccClock', ['ngRoute'])
 
     .controller('FccClockCtrl', ['$scope', function ($scope) {
         var remainingTime = 25;
+        var active = false;
 
-        $scope.breakLength = 5;
-        $scope.sessionLength = 25;
-        $scope.sessionName = 'Session';
-        $scope.sessionTime = remainingTime;
+        $scope.break = 5;
+        $scope.session = 25;
+        $scope.sessionName = 'session';
+        $scope.sessionTime = 25;
+
         $scope.toggleClock = function () {
-            console.log('test');
-        }
+            active = !active;
+        };
+
+        $scope.modTime = function (name, time) {
+            // ignore updates if clock is running
+            if (active) { return; }
+            $scope[name] += time;
+            if ($scope[name] < 1) {
+                $scope[name] = 1;
+            }
+            // update sessionTime remaining if that session was updated
+            if (name === $scope.sessionName) {
+                $scope.sessionTime = $scope[name];
+            }
+        };
+
 
     }]);
