@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="fccClock/fccClock.css">
+<div class="clockContainer">
+    <h1>Free Code Camp - Pomodoro Clock</h1>
+    <a href="http://freecodecamp.com/challenges/zipline-build-a-pomodoro-clock">Zipline: build a pomodoro clock</a>
+    <br>
+
+    <div class="controls">
+        <div class="breakControl">
+            <p>Break Length</p>
+
+            <div class="buttons">
+                <button ng-click="modBreakTime(-1)">-</button>
+                <p>{{breakLength}}</p>
+                <button ng-click="modBreakTime(1)">+</button>
+            </div>
+        </div>
+        <div class="sessionControl">
+            <p>Session Length</p>
+
+            <div class="buttons">
+                <button ng-click="modSessionTime(-1)">-</button>
+                <p>{{sessionLength}}</p>
+                <button ng-click="modSessionTime(1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-click="toggleClock()" class="sessionDisplayOuter">
+        <div class="sessionDisplayInner" ng-click="toggleSessionState()">
+            <h2>{{sessionName}}</h2>
+
+            <p>{{sessionTime}}</p>
+            <div class="fill" ng-style="{'height': fillHeight}"></div>
+        </div>
+    </div>
+</div>

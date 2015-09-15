@@ -1,0 +1,85 @@
+body {
+    background-color: #58402e;
+}
+.clockContainer {
+    color: #fcde9c;
+    text-align: center;
+    text-transform: capitalize;
+}
+.clockContainer h1 {
+    margin-bottom: 0;
+}
+.clockContainer a {
+
+}
+.clockContainer .controls {
+    display: inline-flex;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+
+}
+.clockContainer .controls .breakControl {
+    margin: 0 20px 0 20px;
+
+}
+.clockContainer .controls .sessionControl {
+    margin: 0 20px 0 20px;
+}
+.buttons {
+    display: inline-flex;
+    margin: 0 20px 0 20px;
+}
+.buttons button {
+    margin: 0 10px 0 10px;
+    height: 26px;
+    width: 26px;
+    border-radius: 100%;
+    color: #222;
+}
+.buttons p {
+    margin: 3px;
+}
+.buttons button:focus {
+    outline: none;
+    box-shadow: red 0 0 0 3px;
+
+
+}
+.sessionDisplayOuter {
+    border: 2px solid #C4D6B0;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    color: #58402e;
+}
+.sessionDisplayInner {
+    border: 2px solid #58402e;
+    border-radius: 50%;
+
+    margin: 2px 2px 2px 2px;
+    height: 142px;
+    width: 142px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-top: hidden;
+    position: absolute;
+    overflow: hidden;
+
+}
+.fill {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 2px solid #C4D6B0;
+    border-top: hidden;
+    border-radius: 0 0 50% 50%;
+    background: #C4D6B0;
+    height: 128px;
+    width: 142px;
+    z-index: -1;
+}
