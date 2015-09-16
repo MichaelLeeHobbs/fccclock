@@ -10,7 +10,6 @@ angular.module('myApp.fccClock', ['ngRoute'])
     }])
 
     .controller('FccClockCtrl', ['$scope', function ($scope) {
-        var remainingTime = 25;
         var tMins = 25;
         var tSec = 0;
         var active = false;
@@ -28,7 +27,9 @@ angular.module('myApp.fccClock', ['ngRoute'])
 
         $scope.modTime = function (name, time) {
             // ignore updates if clock is running
-            if (active) { return; }
+            if (active) {
+                return;
+            }
             $scope[name] += time;
             if ($scope[name] < 1) {
                 $scope[name] = 1;
@@ -41,37 +42,47 @@ angular.module('myApp.fccClock', ['ngRoute'])
             }
         };
 
-        var updateTimeDisplay = function (){
-            if (tSec === 0) {
-                $scope.sessionTime = tMins + ':' + '00';
+        // autoUpdate should be true if update is from an automated process
+        var updateTimeDisplay = function (autoUpdate) {
+            if (tSec < 10) {
+                $scope.sessionTime = tMins + ':' + '0' + tSec;
             } else {
                 $scope.sessionTime = tMins + ':' + tSec;
+            }
+            // this avoids the digest already in progress error
+            if (autoUpdate) {
+               $scope.$apply();
             }
 
         };
 
         var updateTime = function () {
-            if (tSec > 1) {
+            if (tSec > 0) {
                 tSec--;
             } else {
                 tMins--;
-                tSec = 60;
+                tSec = 59;
             }
         };
         var update = function () {
-            if (tMins < 0) {
-                if ($scope.sessionName === 'session') {
-                    $scope.sessionName = 'break';
-                }  else {
-                    $scope.sessionName = 'session';
+            if (active) {
+                updateTime();
+
+                if (tMins < 0) {
+                    if ($scope.sessionName === 'session') {
+                        $scope.sessionName = 'break';
+                    } else {
+                        $scope.sessionName = 'session';
+                    }
+
+                    tMins = $scope[$scope.sessionName];
+                    tSec = 0;
                 }
-
-                tMins = $scope[$scope.sessionName];
-                tSec = 0;
             }
+            updateTimeDisplay(true);
+        };
 
-
-        }
-
+        // this is our timer, will call update once per second
+        var intervalID = setInterval(update, 1000);
 
     }]);
