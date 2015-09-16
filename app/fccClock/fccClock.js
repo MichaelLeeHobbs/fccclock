@@ -14,6 +14,7 @@ angular.module('myApp.fccClock', ['ngRoute'])
         var tSec = 0;
         var active = false;
         var maxFill = 142;
+        var intervalID;
 
         $scope.break = 5;
         $scope.session = 25;
@@ -22,12 +23,25 @@ angular.module('myApp.fccClock', ['ngRoute'])
         $scope.fillHeight = 0;
 
         $scope.toggleClock = function () {
-            active = !active;
+
+            if (!active) {
+                // this is our timer, will call update once per second
+                intervalID = setInterval(update, 1000);
+                active = true;
+
+            } else {
+                // this is our timer, will call update once per second
+                clearInterval(intervalID);
+                intervalID = undefined;
+                active = false;
+
+            }
+
         };
 
         $scope.modTime = function (name, time) {
             // ignore updates if clock is running
-            if (active) {
+            if (intervalID !== undefined) {
                 return;
             }
             $scope[name] += time;
@@ -51,7 +65,7 @@ angular.module('myApp.fccClock', ['ngRoute'])
             }
             // this avoids the digest already in progress error
             if (autoUpdate) {
-               $scope.$apply();
+                $scope.$apply();
             }
 
         };
@@ -64,25 +78,30 @@ angular.module('myApp.fccClock', ['ngRoute'])
                 tSec = 59;
             }
         };
+        var updateFill = function () {
+            // why was this so hard? need more caffeine!!!
+            var total = $scope[$scope.sessionName] * 60;
+            var elapsed = $scope[$scope.sessionName] - tMins + (60 - tSec);
+            var percentDone = elapsed / total;
+            var percentFill = maxFill * percentDone;
+            $scope.fillHeight = percentFill + 'px';
+        };
+
         var update = function () {
-            if (active) {
-                updateTime();
-
-                if (tMins < 0) {
-                    if ($scope.sessionName === 'session') {
-                        $scope.sessionName = 'break';
-                    } else {
-                        $scope.sessionName = 'session';
-                    }
-
-                    tMins = $scope[$scope.sessionName];
-                    tSec = 0;
+            updateTime();
+            if (tMins < 0) {
+                if ($scope.sessionName === 'session') {
+                    $scope.sessionName = 'break';
+                } else {
+                    $scope.sessionName = 'session';
                 }
+
+                tMins = $scope[$scope.sessionName];
+                tSec = 0;
             }
+            updateFill();
             updateTimeDisplay(true);
         };
 
-        // this is our timer, will call update once per second
-        var intervalID = setInterval(update, 1000);
 
     }]);
