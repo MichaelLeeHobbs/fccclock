@@ -98,6 +98,11 @@ angular.module('myApp.fccClock', ['ngRoute'])
 
                 tMins = $scope[$scope.sessionName];
                 tSec = 0;
+
+                // Play audio
+                var wav = 'http://www.oringz.com/oringz-uploads/sounds-917-communication-channel.mp3';
+                var audio = new Audio(wav);
+                audio.play();
             }
             updateFill();
             updateTimeDisplay(true);
